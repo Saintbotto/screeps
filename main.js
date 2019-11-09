@@ -1,13 +1,14 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader  = require('role.upgrader');
 var roleBuilder  = require('role.builder');
+var roleDefender  = require('role.defender');
 var spawnLogic  = require('spawn.logic');
 var memoryInit = require('memory.init')
 
 module.exports.loop = function () {
+    console.log('Starting Loop')
 	// Your code goes here
-    memoryInit.run();
-     
+    memoryInit.run(); 
     // Creep Memory Dump
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -16,7 +17,8 @@ module.exports.loop = function () {
         }
     }
     if(!Game.spawns['Spawn1'].spawning){
-        console.log('Running Spawns')
+        console.log('Is this running')
+        //console.log('Running Spawns')
         spawnLogic.run();
     }
 
@@ -35,6 +37,10 @@ module.exports.loop = function () {
             catch(exception){
                 console.error(exception);
             }
-		}
+            
+        }
+        if (creep.memory.role == 'defender'){
+            roleDefender.run(creep)
+        }
     }
 }
